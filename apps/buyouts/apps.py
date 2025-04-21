@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class BuyoutsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'buyouts'
+    name = 'apps.buyouts'

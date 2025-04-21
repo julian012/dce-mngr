@@ -35,12 +35,5 @@ class PaymentMethod(models.Model):
         on_delete=models.PROTECT
     )
 
-    REQUIRED_FIELDS = ['type_payment_method', 'number_card', 'date_card', 'cvv_card']
-
-    class Meta:
-        verbose_name = "Metodo de Pago"
-        verbose_name_plural = "Metodos de Pago"
-        ordering = ['id']
-
     def __str__(self):
         return f'{self.owner.first_name} {self.owner.last_name} {self.number_card}'

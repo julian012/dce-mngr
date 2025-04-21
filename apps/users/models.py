@@ -1,8 +1,24 @@
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import (
+    AbstractUser,
+    BaseUserManager
+)
 
+class UserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('El Email es obligatorio')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save()
+        return user
 
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
 class User(AbstractUser):
 
     id = models.AutoField(
@@ -65,6 +81,8 @@ class User(AbstractUser):
         max_length=120,
     )
 
+    username = None
+
     ACTIVE = 1
     INACTIVE = 2
     state = models.PositiveSmallIntegerField(
@@ -76,13 +94,18 @@ class User(AbstractUser):
         default=ACTIVE
     )
 
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'type_identification', 'identification',
-                       'email']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'type_identification', 'identification']
 
     USERNAME_FIELD = 'email'
+
+    class Meta:
+        swappable = 'AUTH_USER_MODEL'
 
     def get_username(self):
         return self.email
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+    
+    objects = UserManager()
+   
