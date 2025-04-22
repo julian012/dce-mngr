@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-31ckxy7h!i!x&j-uw4*sxp*&#$4x)%(5x!0j=751bc3e7tv6$0
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
@@ -50,14 +51,17 @@ INSTALLED_APPS = [
 
     # packages
     'corsheaders',
-    'djoser'
+    'djoser',
+    'rest_framework'
 ]
 
+# Auth
+AUTH_USER_MODEL = 'users.User'
 TOKEN_EXPIRED_AFTER_HOURS = config('TOKEN_EXPIRED_AFTER_HOURS', cast=int)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'gamma_be.authentication.CustomAuthentication',
+        'dce_mngr.authentication.CustomAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -77,6 +81,7 @@ DJOSER = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -163,5 +168,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Auth
-AUTH_USER_MODEL = 'users.User'

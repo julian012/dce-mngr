@@ -27,10 +27,10 @@ urlpatterns = [
 
     # Api
     path('api/', include('apps.buyouts.urls')),
-    path('api/', include('apps.payment_methods.urls')),
+    #path('api/', include('apps.payment_methods.urls')),
     path('api/', include('apps.products.urls')),
     path('api/', include('apps.shopping_cart.urls')),
-    path('api/', include('apps.users.urls')),
+    #path('api/', include('apps.users.urls')),
 
     # Auth
     path('auth/', include('djoser.urls.base')),

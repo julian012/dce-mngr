@@ -32,7 +32,7 @@ class Product(models.Model):
         blank=False
     )
 
-    is_avaliable = models.BooleanField(
+    is_available = models.BooleanField(
         'Esta activo',
         default=True
     )
